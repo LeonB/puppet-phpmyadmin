@@ -1,0 +1,16 @@
+location /phpmyadmin {
+	index /phpmyadmin/index.php;
+	# root /usr/share/phpmyadmin/;
+	alias /usr/share/phpmyadmin/;
+	# rewrite  ^/phpmyadmin/?(.*)$  /$1  break;
+
+	location ~* \.php$ {
+		fastcgi_pass    localhost:9003; #defined in /etc/php5/fpm/pool.d/phpmyadmin.conf
+		include         fastcgi_params;
+		fastcgi_index   index.php;
+
+		rewrite ^/phpmyadmin/(.*) /$1 break;
+		fastcgi_param   SCRIPT_FILENAME /usr/share/phpmyadmin$fastcgi_script_name;
+		fastcgi_param   DOCUMENT_ROOT   /usr/share/phpmyadmin;
+	}
+}

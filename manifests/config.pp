@@ -7,4 +7,10 @@ class phpmyadmin::config {
 		group  => 'www-data',
 	}
 
+	nginx::vhost::snippet { 'phpmyadmin':
+		vhost   => 'default',
+		content => template('phpmyadmin/nginx_vhost.erb'),
+		ensure  => $phpmyadmin::ensure
+	 }
+
 }
