@@ -1,8 +1,8 @@
 location /phpmyadmin {
+	include deny.conf;
 	index /phpmyadmin/index.php;
-	# root /usr/share/phpmyadmin/;
-	alias /usr/share/phpmyadmin/;
-	# rewrite  ^/phpmyadmin/?(.*)$  /$1  break;
+	root /usr/share/phpmyadmin/;
+	rewrite  ^/phpmyadmin/?(.*)$  /$1  break;
 
 	location ~* \.php$ {
 		fastcgi_pass    localhost:9003; #defined in /etc/php5/fpm/pool.d/phpmyadmin.conf
