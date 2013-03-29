@@ -1,5 +1,8 @@
 class phpmyadmin::config {
 
+        # do package before config
+        Class['phpmyadmin::package'] -> Class['phpmyadmin::config']
+
 	php::fpm::pool { 'phpmyadmin':
 		port   => 9003,
 		ensure => $phpmyadmin::ensure,
