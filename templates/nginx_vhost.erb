@@ -1,16 +1,14 @@
 location /phpmyadmin {
-	include deny.conf;
-	index /phpmyadmin/index.php;
-	root /usr/share/phpmyadmin/;
-	rewrite  ^/phpmyadmin/?(.*)$  /$1  break;
+    include deny.conf;
+    index /phpmyadmin/index.php;
+    alias /usr/share/phpmyadmin/;
 
-	location ~* \.php$ {
-		fastcgi_pass    localhost:9003; #defined in /etc/php5/fpm/pool.d/phpmyadmin.conf
-		include         fastcgi_params;
-		fastcgi_index   index.php;
+    location ~ ^/phpmyadmin(.+\.php)$ {
+            fastcgi_pass    localhost:9003; #defined in /etc/php5/fpm/pool.d/phpmyadmin.conf
+            include         fastcgi_params;
+            fastcgi_index   index.php;
 
-		rewrite ^/phpmyadmin/(.*) /$1 break;
-		fastcgi_param   SCRIPT_FILENAME /usr/share/phpmyadmin$fastcgi_script_name;
-		fastcgi_param   DOCUMENT_ROOT   /usr/share/phpmyadmin;
-	}
+            fastcgi_param   SCRIPT_FILENAME /usr/share/phpmyadmin$1;
+            fastcgi_param   DOCUMENT_ROOT   /usr/share/phpmyadmin;
+    }
 }
