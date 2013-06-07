@@ -1,19 +1,19 @@
 class phpmyadmin::config {
 
-        # do package before config
-        Class['phpmyadmin::package'] -> Class['phpmyadmin::config']
+  # do package before config
+  Class['phpmyadmin::package'] -> Class['phpmyadmin::config']
 
-	php::fpm::pool { 'phpmyadmin':
-		port   => 9003,
-		ensure => $phpmyadmin::ensure,
-		user   => 'www-data',
-		group  => 'www-data',
-	}
+  php::fpm::pool { 'phpmyadmin':
+    ensure => $phpmyadmin::ensure,
+    port   => 9003,
+    user   => 'www-data',
+    group  => 'www-data',
+  }
 
-	nginx::vhost::snippet { 'phpmyadmin':
-		vhost   => 'default',
-		content => template('phpmyadmin/nginx_vhost.erb'),
-		ensure  => $phpmyadmin::ensure
-	 }
+  nginx::vhost::snippet { 'phpmyadmin':
+    ensure  => $phpmyadmin::ensure
+    vhost   => 'default',
+    content => template('phpmyadmin/nginx_vhost.erb'),
+  }
 
 }

@@ -14,12 +14,12 @@
 #
 class phpmyadmin::params {
 
-	### Application related parameters
+  ### Application related parameters
 
-	$package_name = $::operatingsystem ? {
-		default => 'phpmyadmin'
-	}
+  $package_name = $::operatingsystem ? {
+    default => 'phpmyadmin'
+  }
 
-	$enabled = true
+  $enabled = true
 
 }
