@@ -11,7 +11,7 @@ class phpmyadmin::config {
   }
 
   nginx::vhost::snippet { 'phpmyadmin':
-    ensure  => $phpmyadmin::ensure
+    ensure  => $phpmyadmin::ensure,
     vhost   => 'default',
     content => template('phpmyadmin/nginx_vhost.erb'),
   }
